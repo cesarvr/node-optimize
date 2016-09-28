@@ -9,7 +9,15 @@ This module give you access to V8 Profiling capabilities, it can be useful to ch
 - Garbage collection information. 
 - Optimization and Bail-out information. (*for some the V8 Optimizer give up with your function*)
 
+## Functions 
 
+- gc
+  - just information about the state of the garbage collection.    
+- start_cpu_profile/stop_cpu_profile
+  - tell V8 to start recolecting information about the execution. 
+
+
+## Example 
 ``` javascript
 
 optm.start_cpu_profile('profiling-1');    //tell V8 to start taking sample.
