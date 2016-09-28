@@ -7,7 +7,7 @@ This module give you access to V8 Profiling capabilities, it can be useful to ch
 ## Temeletry 
 
 - Garbage collection information. 
-- Optimization and Bail-out information. (*telling you why V8 compiler give up in trying optimize your function.*)
+- Optimization and Bail-out information. (*telling you [why V8 compiler](https://github.com/vhf/v8-bailout-reasons) give up in trying optimize your function.*)
 
 ## Functions 
 
