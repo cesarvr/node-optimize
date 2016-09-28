@@ -22,12 +22,17 @@ v8::Local<v8::Object> ReadNodeProfile(Node& node){
   jobject->Set( Nan::New("bailout").ToLocalChecked(),
                     Nan::New(node->GetBailoutReason()).ToLocalChecked() );
 
+  jobject->Set( Nan::New("script").ToLocalChecked(),
+                    node->GetScriptResourceName() );
+
+
+
   return jobject;
 }
 
 
 template <typename FExtractor, typename Profile>
-v8::Local<v8::Array> GetProfile(FExtractor& extractor, Profile& profile, int amount){
+v8::Local<v8::Array> GetSamples(FExtractor& extractor, Profile& profile, int amount){
 
   auto list = Nan::New<v8::Array>(amount);
 
@@ -48,11 +53,17 @@ v8::Local<v8::Object> CPUProfToV8Object(T& profile) {
 
   object->Set(Nan::New("title").ToLocalChecked(), profile->GetTitle() );
 
+  auto sampleList = Nan::New<v8::Array>(sampleCount);
+
+  for(int index = 0; index < sampleCount; index++) {
+    auto sample = profile->GetSample(index);
+    sampleList->Set(index, ReadNodeProfile(sample));
+  }
+
+  //auto sampleList = GetProfile(ReadNodeProfile<const v8::CpuProfileNode*>, profile, sampleCount);
+
+  object->Set(Nan::New("profile").ToLocalChecked(), sampleList );
   object->Set(Nan::New("samples_count").ToLocalChecked(), Nan::New(sampleCount) );
-
-  auto list = GetProfile(ReadNodeProfile<const v8::CpuProfileNode*>, profile, sampleCount);
-
-  object->Set(Nan::New("profile").ToLocalChecked(), list );
 
   //cleaning up.
   profile->Delete();
@@ -63,6 +74,7 @@ v8::Local<v8::Object> CPUProfToV8Object(T& profile) {
 
 void StartCPUProfiling(const Nan::FunctionCallbackInfo<v8::Value>& args) {
   auto cpu_profiler = Nan::GetCurrentContext()->GetIsolate()->GetCpuProfiler();
+
   cpu_profiler->StartProfiling((args.Length() > 0)
       ? args[0].As<v8::String>()
       : v8::String::Empty(args.GetIsolate()), true);
@@ -70,7 +82,7 @@ void StartCPUProfiling(const Nan::FunctionCallbackInfo<v8::Value>& args) {
 
 void StopCPUProfiling(const Nan::FunctionCallbackInfo<v8::Value>& args) {
   auto cpu_profiler = args.GetIsolate()->GetCpuProfiler();
-  //last_profile =
+
   auto profile = cpu_profiler->StopProfiling((args.Length() > 0)
       ? args[0].As<v8::String>()
       : v8::String::Empty(args.GetIsolate()));
@@ -81,19 +93,24 @@ void StopCPUProfiling(const Nan::FunctionCallbackInfo<v8::Value>& args) {
 void GetGCInformation(const Nan::FunctionCallbackInfo<v8::Value>& info) {
     v8::HeapStatistics heap_stats;
 
-    std::cout << "getting gc information" << std::endl;
-
     Nan::GetCurrentContext()->GetIsolate()->GetHeapStatistics(&heap_stats);
-
-    std::cout << "getting gc information: ok" << std::endl;
 
     v8::Local<v8::Object> obj = Nan::New<v8::Object>();
 
-    obj->Set(Nan::New("total_heap_size").ToLocalChecked(), Nan::New(static_cast<double>(heap_stats.total_heap_size())) );
-    obj->Set(Nan::New("total_heap_size_executable").ToLocalChecked(), Nan::New(static_cast<double>(heap_stats.total_heap_size_executable())) );
-    obj->Set(Nan::New("total_physical_size").ToLocalChecked(), Nan::New(static_cast<double>(heap_stats.total_physical_size())) );
-    obj->Set(Nan::New("used_heap_size").ToLocalChecked(), Nan::New(static_cast<double>(heap_stats.used_heap_size())) );
-    obj->Set(Nan::New("heap_size_limit").ToLocalChecked(), Nan::New(static_cast<double>(heap_stats.heap_size_limit())) );
+    obj->Set(Nan::New("total_heap_size").ToLocalChecked(), 
+             Nan::New(static_cast<double>(heap_stats.total_heap_size())) );
+
+    obj->Set(Nan::New("total_heap_size_executable").ToLocalChecked(), 
+             Nan::New(static_cast<double>(heap_stats.total_heap_size_executable())) );
+
+    obj->Set(Nan::New("total_physical_size").ToLocalChecked(), 
+             Nan::New(static_cast<double>(heap_stats.total_physical_size())) );
+
+    obj->Set(Nan::New("used_heap_size").ToLocalChecked(), 
+             Nan::New(static_cast<double>(heap_stats.used_heap_size())) );
+
+    obj->Set(Nan::New("heap_size_limit").ToLocalChecked(), 
+             Nan::New(static_cast<double>(heap_stats.heap_size_limit())) );
 
     info.GetReturnValue().Set(obj);
 }

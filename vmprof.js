@@ -1,7 +1,6 @@
 'use strict';
 var optm = require('./build/Release/optimus');
 
-/*
 function de_optimized(x,y){
   try{
     var add = x+y;
@@ -18,7 +17,7 @@ function test2() {
   for (var i = 0; i < 1; i++) {
     _arguments = [0]; // Unsupported phi use of arguments
   }
-} */
+} 
 
 optm.start_cpu('profiling-1');
 
@@ -39,9 +38,6 @@ var sample = create_random_vec3(MAX_SAMPLE);
 console.log('vec3->', sample);
 console.log('prof->', optm.stop_cpu('profiling-1'));
 
-/*
-
-console.log('prof->', prof);
 
 
 optm.start_cpu('deoptm')
@@ -59,4 +55,13 @@ for(var i=0; i<10000; i++)
   test2();
 
 console.log('testing deoptm-2 function ->', optm.stop_cpu('deoptm-2'));
-*/
+
+
+
+
+console.log('-----Garbage Collection-----')
+console.log('----------------------------')
+console.log('read->', optm.gc());
+console.log('----------------------------')
+
+
