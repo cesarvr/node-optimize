@@ -117,10 +117,10 @@ void GetGCInformation(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 
 void Init(v8::Local<v8::Object> exports) {
 
-  exports->Set(Nan::New("start_cpu").ToLocalChecked(),
+  exports->Set(Nan::New("start_cpu_profile").ToLocalChecked(),
                Nan::New<v8::FunctionTemplate>(StartCPUProfiling)->GetFunction());
 
-  exports->Set(Nan::New("stop_cpu").ToLocalChecked(),
+  exports->Set(Nan::New("stop_cpu_profile").ToLocalChecked(),
                Nan::New<v8::FunctionTemplate>(StopCPUProfiling)->GetFunction());
 
   exports->Set(Nan::New("gc").ToLocalChecked(),

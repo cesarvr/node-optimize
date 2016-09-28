@@ -12,7 +12,7 @@ This module give you access to V8 Profiling capabilities, it can be useful to ch
 
 ``` javascript
 
-optm.start_cpu('profiling-1');
+optm.start_cpu_profile('profiling-1');    //tell V8 to start taking sample.
 
 const MAX_SAMPLE = 1;
 
@@ -29,7 +29,7 @@ function create_random_vec3(size) {
 var sample = create_random_vec3(MAX_SAMPLE);
 
 console.log('vec3->', sample);
-console.log('prof->', optm.stop_cpu('profiling-1'));
+console.log('prof->', optm.stop_cpu_profile('profiling-1'));   // tell V8 to stop and stop.
 
 ```
 

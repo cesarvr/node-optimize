@@ -19,7 +19,7 @@ function test2() {
   }
 } 
 
-optm.start_cpu('profiling-1');
+optm.start_cpu_profile('profiling-1');
 
 const MAX_SAMPLE = 1;
 
@@ -36,19 +36,19 @@ function create_random_vec3(size) {
 var sample = create_random_vec3(MAX_SAMPLE);
 
 console.log('vec3->', sample);
-console.log('prof->', optm.stop_cpu('profiling-1'));
+console.log('prof->', optm.stop_cpu_profile('profiling-1'));
 
 
 
-optm.start_cpu('deoptm')
+optm.start_cpu_profile('deoptm')
 de_optimized()
-console.log('testing de-optimize function ->', optm.stop_cpu('deoptm'));
+console.log('testing de-optimize function ->', optm.stop_cpu_profile('deoptm'));
 
 
 
-optm.start_cpu('deoptm-2')
+optm.start_cpu_profile('deoptm-2')
 test2();
-console.log('testing deoptm-2 function ->', optm.stop_cpu('deoptm-2'));
+console.log('testing deoptm-2 function ->', optm.stop_cpu_profile('deoptm-2'));
 
 
 console.log('-----Garbage Collection-----')
