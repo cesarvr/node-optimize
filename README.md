@@ -7,14 +7,15 @@ This module give you access to V8 Profiling capabilities, it can be useful to ch
 ## Temeletry 
 
 - Garbage collection information. 
-- Optimization and Bail-out information. (*for some the V8 Optimizer give up with your function*)
+- Optimization and Bail-out information. (*telling you why V8 compiler give up in trying optimize your function.*)
 
 ## Functions 
 
 - gc
-  - just information about the state of the garbage collection.    
+  - just information about the state of the garbage collection.
+
 - start_cpu_profile/stop_cpu_profile
-  - tell V8 to start recolecting information about the execution. 
+  - tell V8 to start recolecting information about the current execution. 
 
 
 ## Example 
