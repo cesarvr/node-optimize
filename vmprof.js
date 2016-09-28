@@ -41,27 +41,18 @@ console.log('prof->', optm.stop_cpu('profiling-1'));
 
 
 optm.start_cpu('deoptm')
-
-for(var i=0; i<100; i++){
-  de_optimized()
-}
+de_optimized()
 console.log('testing de-optimize function ->', optm.stop_cpu('deoptm'));
 
 
 
 optm.start_cpu('deoptm-2')
-
-for(var i=0; i<10000; i++)
-  test2();
-
+test2();
 console.log('testing deoptm-2 function ->', optm.stop_cpu('deoptm-2'));
-
-
 
 
 console.log('-----Garbage Collection-----')
 console.log('----------------------------')
 console.log('read->', optm.gc());
 console.log('----------------------------')
-
 

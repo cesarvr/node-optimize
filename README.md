@@ -10,6 +10,29 @@ This module give you access to V8 Profiling capabilities, it can be useful to ch
 - Optimization and Bail-out information. (*for some the V8 Optimizer give up with your function*)
 
 
+``` javascript
+
+optm.start_cpu('profiling-1');
+
+const MAX_SAMPLE = 1;
+
+function create_random_vec3(size) {
+  var sample = [];
+  var rnd = (x) => Math.floor(Math.random() * x) + 1;
+
+  for(var i=0; i<size; i++)
+   sample.push({ x:rnd(size), y:rnd(size), z:rnd(size)  });
+
+  return sample
+};
+
+var sample = create_random_vec3(MAX_SAMPLE);
+
+console.log('vec3->', sample);
+console.log('prof->', optm.stop_cpu('profiling-1'));
+
+```
+
 
 ```
 { title: 'deoptm',
