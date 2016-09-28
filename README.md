@@ -29,7 +29,7 @@ function create_random_vec3(size) {
 var sample = create_random_vec3(MAX_SAMPLE);
 
 console.log('vec3->', sample);
-console.log('prof->', optm.stop_cpu_profile('profiling-1'));   // tell V8 to stop and stop.
+console.log('prof->', optm.stop_cpu_profile('profiling-1'));   // tell V8 to stop.
 
 ```
 
