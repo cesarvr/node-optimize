@@ -1,1 +1,0 @@
-cmd_Release/obj.target/optimus.node := g++ -shared -pthread -rdynamic -m64  -Wl,-soname=optimus.node -o Release/obj.target/optimus.node -Wl,--start-group Release/obj.target/optimus/optimus.o -Wl,--end-group 
